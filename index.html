@@ -3,57 +3,75 @@
   <head>
     <meta charset="utf-8">
 
+    <link rel="stylesheet" href="style.css"/>
+        
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    
+    <script src="https://kit.fontawesome.com/ebfd66d4e0.js" crossorigin="anonymous"></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
     <title>Le Juste Prix</title>
 
-    <style>
-      html {
-        font-family: sans-serif;
-      }
-
-      body {
-        width: 50%;
-        max-width: 800px;
-        min-width: 380px;
-        margin: auto;
-      }
-
-      .lastResult {
-        color: white;
-        padding: 3px;
-      }
-    </style>
   </head>
 
   <body>
-    <h1>Le Juste Prix</h1>
 
-    <p>Nous avons sélectionné un nombre pris au hasard entre 1 et 100. Vous avez droit à 10 tentatives. A chaque essai nous vous dirons si c'est plus, moins ou si c'est gagné !</p>
+    <header></header>
 
-    <div class="form">
-      <label for="guessField">Entrez un nombre: </label><input type="text" id="guessField" class="guessField">
-      <input type="submit" value="Submit guess" class="guessSubmit">
-    </div>
+    <main>
 
-    <div class="resultParas">
-      <p class="guesses"></p>
-      <p class="lastResult"></p>
-      <p class="lowOrHi"></p>
-    </div>
+      <h1>Le Juste Prix</h1>
+
+      <div class="up">
+
+        <p class="text">Nous avons sélectionné un nombre pris au hasard entre 1 et 100. Vous avez droit à 5 tentatives.</p>
+        <p class="text">A chaque essai nous vous dirons si c'est :<br>- plus <br>- moins <br>- ou si c'est gagné !</p>
+
+      </div>
+
+      <div class="down">
+
+        <div class="form">
+
+          <label for="guessField" class="text-2">Entrez un nombre : </label><input type="text" id="guessField" class="guessField">
+          <input type="submit" value="Validation" class="guessSubmit">
+
+        </div>
+    
+        <div class="resultParas">
+
+          <p class="guesses"></p>
+          <p class="lastResult"></p>
+          <p class="lowOrHi"></p>
+
+        </div>
+
+
+      </div>
+
+    </main>
+
+    
+
+    <footer></footer>
+
+    
 
     <script>
       let randomNumber = Math.floor(Math.random() * 100) + 1;
-      const guesses = document.querySelector('.guesses');
-      const lastResult = document.querySelector('.lastResult');
-      const lowOrHi = document.querySelector('.lowOrHi');
-      const guessSubmit = document.querySelector('.guessSubmit');
-      const guessField = document.querySelector('.guessField');
+      let guesses = document.querySelector('.guesses');
+      let lastResult = document.querySelector('.lastResult');
+      let lowOrHi = document.querySelector('.lowOrHi');
+      let guessSubmit = document.querySelector('.guessSubmit');
+      let guessField = document.querySelector('.guessField');
       let guessCount = 1;
       let resetButton;
 
       function checkGuess() {
         let userGuess = Number(guessField.value);
         if (guessCount === 1) {
-          guesses.textContent = 'Previous guesses: ';
+          guesses.textContent = 'Déjà tentés: ';
         }
 
         guesses.textContent += userGuess + ' ';
@@ -61,18 +79,18 @@
         if (userGuess === randomNumber) {
           lastResult.textContent = 'Bravo! c\'est gagné !';
           lastResult.style.backgroundColor = 'green';
-          lowOrHi.textContent = '';
-          setGameOver();
-        } else if (guessCount === 10) {
+          lowOrHi.textContent = 'Belle performance';
+          setGameOver();} 
+          else if (guessCount === 5) {
           lastResult.textContent = '!!!GAME OVER!!!';
-          lowOrHi.textContent = '';
-          setGameOver();
-        } else {
-          lastResult.textContent = 'Wrong!';
+          lowOrHi.textContent = 'T\'es pas une lumière';
+          setGameOver();} 
+          else {
+          lastResult.textContent = 'Raté !';
           lastResult.style.backgroundColor = 'red';
           if(userGuess < randomNumber) {
-            lowOrHi.textContent = 'c\'est plus !' ;
-          } else if(userGuess > randomNumber) {
+            lowOrHi.textContent = 'c\'est plus !' ;}
+          else if(userGuess > randomNumber) {
             lowOrHi.textContent = 'c\'est moins !';
           }
         }
@@ -88,14 +106,14 @@
         guessField.disabled = true;
         guessSubmit.disabled = true;
         resetButton = document.createElement('button');
-        resetButton.textContent = 'Nouveau jeu';
+        resetButton.textContent = 'Nouvelle partie';
         document.body.appendChild(resetButton);
         resetButton.addEventListener('click', resetGame);
       }
 
       function resetGame() {
         guessCount = 1;
-        const resetParas = document.querySelectorAll('.resultParas p');
+        let resetParas = document.querySelectorAll('.resultParas p');
         for(let i = 0 ; i < resetParas.length ; i++) {
           resetParas[i].textContent = '';
         }
